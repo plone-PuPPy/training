@@ -1,6 +1,6 @@
 class plone {
 
-    $plone_version = "5.0"
+    $plone_version = "5.0.2"
 
     file { ['/home/vagrant/tmp',
             '/home/vagrant/.buildout',
@@ -20,7 +20,10 @@ class plone {
         content => inline_template('[buildout]
 eggs-directory = /home/vagrant/buildout-cache/eggs
 download-cache = /home/vagrant/buildout-cache/downloads
-extends-cache = /home/vagrant/buildout-cache/extends'),
+extends-cache = /home/vagrant/buildout-cache/extends
+[instance]
+file-storage = /home/vagrant/var/filestorage/Data.fs
+blob-storage = /home/vagrant/var/blobstorage'),
         owner => 'vagrant',
         group => 'vagrant',
         mode => '0664',
@@ -69,7 +72,7 @@ extends-cache = /home/vagrant/buildout-cache/extends'),
     }
 
     # get training buildout
-    exec {'git clone https://github.com/collective/training_buildout.git buildout && cd buildout && cd ..':
+    exec {'git clone https://github.com/plone/buildout.coredev.git buildout && cd buildout && cd ..':
         alias => "checkout_training",
         creates => '/vagrant/buildout',
         user => 'vagrant',
@@ -89,7 +92,7 @@ extends-cache = /home/vagrant/buildout-cache/extends'),
     }
 
     # run training buildout
-    exec {'/vagrant/buildout/bin/buildout -c vagrant_provisioning.cfg':
+    exec {'/vagrant/buildout/bin/buildout':
         alias => "buildout_training",
         creates => '/vagrant/buildout/bin/instance',
         user => 'vagrant',
