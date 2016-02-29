@@ -1,3 +1,6 @@
 [submodule "ploneconf.site_sneak"]
 	path = ploneconf.site_sneak
 	url = https://github.com/collective/ploneconf.site_sneak.git
+[submodule "_build/html"]
+	path = _build/html
+	url = git@github.com:plone-PuPPy/plone-PuPPy.github.io.git
